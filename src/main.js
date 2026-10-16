@@ -1,9 +1,15 @@
 import "./style.css";
 import * as THREE from "three";
 import importObj from "./importObj";
+import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-function main() {
+async function main() {
+  const loader = new HDRLoader();
+  const envMap = await loader.loadAsync(
+    "/src/assets/qwantani_noon_puresky_4k.hdr",
+  );
+
   const canvas = document.querySelector("#c");
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
@@ -23,15 +29,13 @@ function main() {
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
+  envMap.mapping = THREE.EquirectangularReflectionMapping;
+  scene.environment = envMap;
 
   {
-    const ambLight = new THREE.AmbientLight(0xfffbe8, 10);
-    ambLight.position.set(0, 20, 0);
+    const ambLight = new THREE.AmbientLight(0xffefc9, 4);
+    ambLight.position.set(0, 30, 0);
     scene.add(ambLight);
-
-    const pointLight = new THREE.PointLight(0xffffff, 5, 500);
-    pointLight.position.set(0, 100, 0);
-    scene.add(pointLight);
   }
 
   importObj(scene);

@@ -23,14 +23,35 @@ const OBJECTS = [
     link: "/src/assets/rope3.glb",
   },
   {
-    name: "rope4",
-    link: "/src/assets/rope4.glb",
-  },
-  {
     name: "ticket",
     link: "/src/assets/ticket.glb",
   },
 ];
+
+const ropeMat = new THREE.MeshBasicMaterial({ color: 0x941e1e });
+
+const clocheMat = new THREE.MeshPhysicalMaterial({
+  color: new THREE.Color(0xe8a200),
+  reflectivity: 0.3,
+  roughness: 0,
+  metalness: 0.8,
+  ior: 0.8,
+  color: 0xbd9d00,
+  side: THREE.FrontSide,
+});
+
+const glassMat = new THREE.MeshPhysicalMaterial({
+  color: 0xc2d4ff,
+  opacity:0.6,
+transparent : true,
+depthWrite: false,
+reflectivity:0.5,
+transmission: 0.1,
+});
+const socleMat = new THREE.MeshBasicMaterial({ color: 0x4f2a19 });
+const baseMat = new THREE.MeshBasicMaterial({ color: 0x254f0d });
+const treeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+const giftMat = new THREE.MeshBasicMaterial({ color: 0xcc5c72 });
 
 function importObj(scene) {
   OBJECTS.forEach((obj) => {
@@ -40,39 +61,27 @@ function importObj(scene) {
 
       root.traverse((child) => {
         if (child.name.includes("rope")) {
-          child.material = new THREE.MeshBasicMaterial({ color: 0x941e1e });
+          child.material = ropeMat;
         }
 
-        if (child.name === "Cloche") {
-          child.material = new THREE.MeshPhysicalMaterial({
-            reflectivity: 0.182,
-            roughness: 0.347,
-            metalness: 0.6,
-            ior: 1,
-            iridescence: 0,
-            iridescenceIOR: 1.3,
-            color: new THREE.Color(0xb39a1e),
-            emissive: new THREE.Color(0x7d6717),
-            specularColor: new THREE.Color(0xffffff),
-            side: THREE.FrontSide,
-          });
+        if (child.name.includes("clo")) {
+          child.material = clocheMat;
         }
 
-        if (child.name === "BouleNeige") {
-          child.traverse((c) => {
-            if (c.name === "Cube014") {
-              c.material = new THREE.MeshBasicMaterial({
-                color: 0xff0000,
-              });
-            }
+        if (child.name === "socle") {
+          child.material = socleMat;
+        }
 
-            if (c.name === "Cube014_2") {
-              c.material = new THREE.MeshBasicMaterial({
-                color: 0x0c4700,
-              });
-            }
-          });
-          console.log(child);
+        if (child.name === "tree") {
+          child.material = treeMat;
+        }
+
+        if (child.name.includes("base")) {
+          child.material = baseMat;
+        }
+
+        if(child.name === "glass"){
+          child.material = glassMat
         }
       });
 
