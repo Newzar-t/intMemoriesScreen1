@@ -42,11 +42,11 @@ const clocheMat = new THREE.MeshPhysicalMaterial({
 
 const glassMat = new THREE.MeshPhysicalMaterial({
   color: 0xc2d4ff,
-  opacity:0.6,
-transparent : true,
-depthWrite: false,
-reflectivity:0.5,
-transmission: 0.1,
+  opacity: 0.6,
+  transparent: true,
+  depthWrite: false,
+  reflectivity: 0.5,
+  transmission: 0.1,
 });
 const socleMat = new THREE.MeshPhongMaterial({ color: 0x4f2a19 });
 const baseMat = new THREE.MeshBasicMaterial({ color: 0x254f0d });
@@ -80,8 +80,14 @@ function importObj(scene) {
           child.material = baseMat;
         }
 
-        if(child.name === "glass"){
-          child.material = glassMat
+        if (child.name === "glass") {
+          child.material = glassMat;
+        }
+
+        if (child.name.includes("gift")) {
+          child.traverse((c) => {
+            c.material = giftMat;
+          });
         }
       });
 
