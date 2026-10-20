@@ -15,7 +15,7 @@ async function loadEnv() {
 
 const mapTexture = loadEnv();
 window.addEventListener("DOMContentLoaded", () => {
-  main(loadEnv);
+  main(mapTexture);
 });
 
 function main(envMap) {
@@ -27,20 +27,21 @@ function main(envMap) {
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
-  /*   envMap.mapping = THREE.EquirectangularReflectionMapping;
-  scene.environment = envMap; */
-
+  envMap.mapping = THREE.EquirectangularReflectionMapping;
+  scene.environment = envMap;
   const fov = 75;
   const aspect = window.innerWidth / window.innerHeight;
   const near = 0.1;
   const far = 500;
 
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  const cameraHelper = new THREE.CameraHelper(camera);
 
   const cameraPole = new THREE.Object3D();
-  camera.position.set(0,100,105);
+  camera.position.set(0, 100, 105);
   cameraPole.add(camera);
   scene.add(cameraPole);
+  scene.add(cameraHelper);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;

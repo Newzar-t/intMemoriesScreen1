@@ -48,10 +48,10 @@ const glassMat = new THREE.MeshPhysicalMaterial({
   reflectivity: 0.5,
   transmission: 0.1,
 });
-const socleMat = new THREE.MeshPhongMaterial({ color: 0x4f2a19 });
-const baseMat = new THREE.MeshBasicMaterial({ color: 0x254f0d });
-const treeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-const giftMat = new THREE.MeshBasicMaterial({ color: 0xcc5c72 });
+const socleMat = new THREE.MeshToonMaterial({ color: 0x4f2a19 });
+const baseMat = new THREE.MeshToonMaterial({ color: 0x254f0d });
+const treeMat = new THREE.MeshToonMaterial({ color: 0xffffff });
+const giftMat = new THREE.MeshToonMaterial({ color: 0xcc5c72 });
 
 function importObj(scene) {
   OBJECTS.forEach((obj) => {

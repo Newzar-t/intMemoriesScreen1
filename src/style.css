@@ -19,6 +19,20 @@ body {
   left: 0;
 }
 
+.split {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.split > div {
+  width: 100%;
+  height: 100%;
+}
+
 #app {
   width: 100%;
   height: 100%;
