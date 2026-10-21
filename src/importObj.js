@@ -67,7 +67,7 @@ function importObj(scene, camera) {
 
         if (child.name.includes("clo")) {
           child.material = clocheMat;
-          highlightObj(camera, child.position);
+          highlightObj(camera, child.position, camera.zoom);
         }
 
         if (child.name === "socle") {

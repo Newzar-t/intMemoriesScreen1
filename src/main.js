@@ -47,7 +47,7 @@ function main(envMap) {
   console.log(camera.position);
   const cameraHelper = new THREE.CameraHelper(camera);
 
-  const camera2 = new THREE.PerspectiveCamera(60, 2, 0.1, 500);
+  const camera2 = new THREE.PerspectiveCamera(60, 2, 0.1,1000);
   camera2.position.set(40, 10, 30);
   camera2.lookAt(0, 5, 0);
 
