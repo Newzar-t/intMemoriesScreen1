@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import highlightObj from "./highlight";
 
 const OBJECTS = [
   {
@@ -53,7 +54,7 @@ const baseMat = new THREE.MeshToonMaterial({ color: 0x254f0d });
 const treeMat = new THREE.MeshToonMaterial({ color: 0xffffff });
 const giftMat = new THREE.MeshToonMaterial({ color: 0xcc5c72 });
 
-function importObj(scene) {
+function importObj(scene, camera) {
   OBJECTS.forEach((obj) => {
     const gltfLoader = new GLTFLoader();
     gltfLoader.load(obj.link, (gltf) => {
@@ -66,6 +67,7 @@ function importObj(scene) {
 
         if (child.name.includes("clo")) {
           child.material = clocheMat;
+          highlightObj(camera, child.position);
         }
 
         if (child.name === "socle") {
