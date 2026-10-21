@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import gsap from "gsap";
 import highlightObj from "./highlight";
 
 const OBJECTS = [
@@ -29,8 +30,17 @@ const OBJECTS = [
   },
 ];
 
-const ropeMat = new THREE.MeshBasicMaterial({ color: 0x941e1e });
-const highlightRopeMat = new THREE.MeshBasicMaterial({ color: 0xdddddd });
+const baseColor = new THREE.Color(0x7a2117);
+const trigColor = new THREE.Color(0xfc8274);
+
+const fadeColor = (obj) => {
+  gsap.to(obj.material.color, {
+    r: trigColor.r,
+    g: trigColor.g,
+    b: trigColor.b,
+    duration: 4,
+  });
+};
 
 const clocheMat = new THREE.MeshPhysicalMaterial({
   color: new THREE.Color(0xe8a200),
@@ -64,7 +74,7 @@ function importObj(scene, camera) {
 
       root.traverse((child) => {
         if (child.name.includes("rope")) {
-          child.material = ropeMat;
+          child.material = new THREE.MeshToonMaterial({ color: baseColor });
           ropes.push(child);
         }
 
@@ -73,7 +83,7 @@ function importObj(scene, camera) {
           window.addEventListener("keydown", (event) => {
             if (event.key === "m") {
               highlightObj(camera, child, camera.zoom);
-              ropes[0].material = highlightRopeMat;
+              fadeColor(ropes[0]);
             }
           });
         }
