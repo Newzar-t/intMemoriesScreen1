@@ -117,8 +117,6 @@ function main(envMap) {
   function animate(time) {
     time *= 0.001;
 
-    cameraPole.rotation.y = time * 0.1;
-
     resizeRenderer(renderer);
 
     renderer.setScissorTest(true);

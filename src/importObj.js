@@ -30,6 +30,7 @@ const OBJECTS = [
 ];
 
 const ropeMat = new THREE.MeshBasicMaterial({ color: 0x941e1e });
+const highlightRopeMat = new THREE.MeshBasicMaterial({ color: 0xdddddd });
 
 const clocheMat = new THREE.MeshPhysicalMaterial({
   color: new THREE.Color(0xe8a200),
@@ -55,6 +56,7 @@ const treeMat = new THREE.MeshToonMaterial({ color: 0xffffff });
 const giftMat = new THREE.MeshToonMaterial({ color: 0xcc5c72 });
 
 function importObj(scene, camera) {
+  let ropes = [];
   OBJECTS.forEach((obj) => {
     const gltfLoader = new GLTFLoader();
     gltfLoader.load(obj.link, (gltf) => {
@@ -63,11 +65,17 @@ function importObj(scene, camera) {
       root.traverse((child) => {
         if (child.name.includes("rope")) {
           child.material = ropeMat;
+          ropes.push(child);
         }
 
         if (child.name.includes("clo")) {
           child.material = clocheMat;
-          highlightObj(camera, child.position, camera.zoom);
+          window.addEventListener("keydown", (event) => {
+            if (event.key === "m") {
+              highlightObj(camera, child, camera.zoom);
+              ropes[0].material = highlightRopeMat;
+            }
+          });
         }
 
         if (child.name === "socle") {
@@ -84,6 +92,19 @@ function importObj(scene, camera) {
 
         if (child.name === "glass") {
           child.material = glassMat;
+          window.addEventListener("keydown", (event) => {
+            if (event.key === "k") {
+              highlightObj(camera, child, camera.zoom);
+            }
+          });
+        }
+
+        if (child.name === "ticket") {
+          window.addEventListener("keydown", (event) => {
+            if (event.key === "h") {
+              highlightObj(camera, child, camera.zoom);
+            }
+          });
         }
 
         if (child.name.includes("gift")) {
